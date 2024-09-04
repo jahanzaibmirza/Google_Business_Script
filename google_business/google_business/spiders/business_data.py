@@ -5,16 +5,14 @@ from datetime import datetime
 class BusinessDataSpider(scrapy.Spider):
     name = "business_data"
 
-    custom_settings = {'ROBOTSTXT_OBEY': False,
+    custom_settings = {'FEED_URI': f'outputs/google_business{datetime.now().strftime("%d_%b_%Y_%H_%M_%S")}.csv',
+                       'ROBOTSTXT_OBEY': False,
                        'RETRY_TIMES': 5,
                        'DOWNLOAD_DELAY': 0.4,
                        'CONCURRENT_REQUESTS': 1,
                        'HTTPERROR_ALLOW_ALL': True,
-                       'FEED_URI': f'outputs/google_business{datetime.now().strftime("%d_%b_%Y_%H_%M_%S")}.csv',
                        'FEED_FORMAT': 'csv',
-                       'FEED_EXPORT_ENCODING': 'utf-8',
-
-                       }
+                       'FEED_EXPORT_ENCODING': 'utf-8',}
 
     headers = {
         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -41,14 +39,11 @@ class BusinessDataSpider(scrapy.Spider):
         'x-client-data': 'CI22yQEIpbbJAQipncoBCNqRywEIlKHLAQic/swBCPqYzQEIhaDNAQivns4BCOWvzgEIxLbOAQi8uc4BGLquzgEYnLHOAQ==',
     }
     start_urls = ["https://quotes.toscrape.com/"]
-
-
-
     listing_page_url='https://www.google.com/localservices/prolist?ssta=1&src=2&q={}&lci={page}'
 
     sub_details = 'https://www.google.com/localservices/prolist?g2lbs=AP8S6ENgyDKzVDV4oBkqNJyZonhEwT_VJ6_XyhCY8jgI2NcumLHJ7mfebZa8Yvjyr_RwoUDwlSwZt5ofLQk3D079b7a0tYFMAl-OvnNjzh2HzyjZNDGO0bloXZTJ8ttkCFt5rwXuqt_u&hl=en-PK&gl=pk&ssta=1&oq={q}&src=2&sa=X&scp=CgASABoAKgA%3D&q={q}&ved=2ahUKEwji7NSKjZiAAxUfTEECHdJnDF8QjdcJegQIABAF&slp=MgBAAVIECAIgAIgBAJoBBgoCFxkQAA%3D%3D&spp={id}'
-    # serach_keyword=['doctor in pakistan','dentist in california']
-    serach_keyword=['dentist in california']
+
+    serach_keyword=['dentist in california','doctor in pakistan']
 
     def parse(self, response):
         page=0
