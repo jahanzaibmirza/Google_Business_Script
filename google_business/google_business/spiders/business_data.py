@@ -106,6 +106,7 @@ class BusinessDataSpider(scrapy.Spider):
                 found = True
                 hours = match.group(1).split('[["')[-1].split('"')[0]
                 opening_time.append(f'{day}: {hours}')
+
         if not found:
             sttr = '//script[contains(text(),"hash: {}")]/text()'.format("'4'")
             script = response.xpath(sttr).get('{}')
